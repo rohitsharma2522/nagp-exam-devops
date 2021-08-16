@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubernetes-deployment-feature
+  labels:
+    app: kubernetes-app-feature
+
+specs:
+  replicas: 3
+  matchLabels :
+    label:
+      app: kubernetes-app-feature
+  spec:
+    container:
+    - name: kubernetes-app-feature
+      image: rohit2522/nagp-jenkins-assignment:feature-latest
+      ports:
+        containerPort: 8080
+---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: kubernetes-service-feature
+  spec:
+    selector:
+      app: kubernetes-app-feature 
+  type: NodePort
+  spec:
+    container:
+      nodePort: 30157
+      port: 8080
+      targetPort: 8080
