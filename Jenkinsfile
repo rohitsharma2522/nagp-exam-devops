@@ -32,14 +32,14 @@ pipeline{
                 }
             }
         }
-        stage("Quality gate") {
+        /*stage("Quality gate") {
             steps {
                 timeout(time: 1, unit: 'HOURS') {
                     waitForQualityGate abortPipeline true
                 }
                 
             }
-        }
+        }*/
         stage("Docker image") {
             steps {
                 bat "docker build -t i-rohit2522-feature:${BUILD_NUMBER} --no-cache -f Dockerfile ."
