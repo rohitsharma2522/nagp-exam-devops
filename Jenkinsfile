@@ -35,7 +35,7 @@ pipeline{
         stage("Quality gate") {
             steps {
                 timeout(time: 1, unit: 'HOURS') {
-                    bat "waitForQualityGate abortPipeline true"
+                    waitForQualityGate abortPipeline true
                 }
                 
             }
