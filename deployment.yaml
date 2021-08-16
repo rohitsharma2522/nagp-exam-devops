@@ -5,17 +5,21 @@ metadata:
   labels:
     app: kubernetes-app-feature
 
-specs:
+spec:
   replicas: 3
-  matchLabels :
-    label:
+  selector:
+    matchLabels:
       app: kubernetes-app-feature
-  spec:
-    container:
-    - name: kubernetes-app-feature
-      image: rohit2522/nagp-jenkins-assignment:feature-latest
-      ports:
-        containerPort: 8080
+  template:
+    metadata:
+      labels:
+        app: kubernetes-app-feature
+    spec:
+      containers:
+      - name: kubernetes-app-feature
+        image: rohit2522/nagp-jenkins-assignment:feature-latest
+        ports:
+        - containerPort: 8080
 ---
   apiVersion: v1
   kind: Service
@@ -24,9 +28,28 @@ specs:
   spec:
     selector:
       app: kubernetes-app-feature 
-  type: NodePort
-  spec:
-    container:
-      nodePort: 30157
-      port: 8080
+    type: NodePort
+    ports:
+    - port: 8080
+      nodePort: 30157 
       targetPort: 8080
+---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: kubernetes-service-loadbalancer-feature
+  spec:
+    selector:
+      app: kubernetes-app-feature 
+    type: LoadBalancer
+    ports:
+    - port: 8080
+      targetPort: 8080
+---
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: kubernetes-service-configmap-feature
+  data:
+    branch: "Feature"
+    empId: "1"
