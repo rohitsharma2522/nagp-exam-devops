@@ -32,6 +32,11 @@ pipeline{
                 }
             }
         }
+        stage("Quality gate") {
+            steps {
+                waitForQualityGate abortPipeline true
+            }
+        }
         stage("Docker image") {
             steps {
                 bat "docker build -t i-rohit2522-feature:${BUILD_NUMBER} --no-cache -f Dockerfile ."
@@ -44,7 +49,7 @@ pipeline{
         }
         stage ("Docker tag") {
             steps {
-                bat "docket tag i-rohit2522-feature:${BUILD_NUMBER} ${registry}:feature-latest"
+                bat "docker tag i-rohit2522-feature:${BUILD_NUMBER} ${registry}:feature-latest"
                 withDockerRegistry(credentialsId: 'Test_Docker', url:"") {
                     bat "docker push ${registry}:feature-latest"
                 }
