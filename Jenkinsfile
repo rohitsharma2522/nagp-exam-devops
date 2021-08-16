@@ -34,7 +34,10 @@ pipeline{
         }
         stage("Quality gate") {
             steps {
-                waitForQualityGate abortPipeline true
+                timeout(time: 1, units: 'HOURS') {
+                    bat "waitForQualityGate abortPipeline true"
+                }
+                
             }
         }
         stage("Docker image") {
