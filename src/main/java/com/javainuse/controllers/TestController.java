@@ -13,7 +13,7 @@ public class TestController {
 	public Employee firstPage() {
 
 		Employee emp = new Employee();
-		emp.setBranch("Master");
+		emp.setBranch("Feature");
 		emp.setName("emp1");
 		emp.setDesignation("manager");
 		emp.setEmpId("1");
